@@ -21,7 +21,7 @@ let tags = ['Favorites', 'Dining', 'Room/Suite']
 let insert = (param) => {
   db.connection.query(`INSERT INTO carousel (room_name, img_url, img_description, tag) VALUES (?, ?, ?, ?)`, param, (err, result) => {
     if (err) {
-      console.log(`Error inserting planet with id of ${id}`)
+      // console.log(`Error inserting planet with id of ${id}`)
       // console.log(`${id}, ${randomImg}`);
     }
     else {
