@@ -6,6 +6,8 @@ const Promise = require('bluebird');
 const imgUrl = 'https://hrr43teamhan.s3-us-west-1.amazonaws.com/'
 // + num.jpg
 
+// We'll test it at 50k
+let max = 50000
 
 generateRandomNum = (min, max) => {
   min = Math.ceil(min);
@@ -14,64 +16,59 @@ generateRandomNum = (min, max) => {
 }
 
 
-
+const t1 = Date;
 
 let tags = ['Favorites', 'Dining', 'Room/Suite']
 
-let insert = (param) => {
-  db.connection.query(`INSERT INTO carousel (room_name, img_url, img_description, tag) VALUES (?, ?, ?, ?)`, param, (err, result) => {
+let insert = async (param) => {
+  await db.connection.query(`INSERT INTO carousel (room_name, img_url, img_description, tag) VALUES (?, ?, ?, ?)`, param, (err, result) => {
     if (err) {
       // console.log(`Error inserting planet with id of ${id}`)
       // console.log(`${id}, ${randomImg}`);
-    }
-    else {
+    } else {
       console.log('Success!')
+      const t1 = new Date;
+      console.log(t1 - t0);
     }
   })
 }
 
-let insertAsync = Promise.promisify(insert)
+// let insertAsync = Promise.promisify(insert)
+
+// const t0 = new Date;
+
+//   for (let instance = 1; instance <= 20000; instance++) {
+//     for (let imgs = 1; imgs <= 20; imgs++) {
+//       // console.log(instance, imgs);
+//       let randomTag = tags[generateRandomNum(0, 2)]
+//       let randomImg = imgUrl + generateRandomNum(1, 50) + '.jpg'
+//       let randomDesc = faker.lorem.sentence()
+//       insert([instance, randomImg, randomDesc, randomTag]);
+//       // what you want: line 41 finishes and only after it finishes you go back to line 37
+//     }
+//   }
+const t0 = new Date;
 
 
-  for (let instance = 1; instance <= 100; instance++) {
+// pass more arguments
+  // a checker to emaske
+var seeding = function (num) {
+  for (let instance = 1; instance <= num; instance++) {
     for (let imgs = 1; imgs <= 20; imgs++) {
       let randomTag = tags[generateRandomNum(0, 2)]
       let randomImg = imgUrl + generateRandomNum(1, 50) + '.jpg'
       let randomDesc = faker.lorem.sentence()
-      insertAsync([instance, randomImg, randomDesc, randomTag]);
+      insert([instance, randomImg, randomDesc, randomTag]);
+      //return
     }
   }
+}
 
+seeding(20000)
 
-
-
-  // let hotelsAdded = 0
-  // let photosAdded = 0
-
-  // let seed = () => {
-  //   db.connection.query(`INSERT INTO media (room_name, img_url, img_description, tag) VALUES (${hotelsAdded + 1}, ${randomImg}, 'test', 'test')`, (err, result) => {
-  //     if (err) {
-  //       console.log(`Error in adding hotel with id ${hotelsAdded + 1}`)
-  //       db.end();
-  //     }
-  //     else {
-  //       hotelsAdded++
-  //       console.log(`successfully added hotel with id ${hotelsAdded + 1}`)
-  //       if (hotelsAdded < 100) {
-  //         seed();
-  //       }
-  //     }
-  //   })
-  // }
-
-  // seed();
-  // // process.exit(0);
-
-
-  // only generating random images of 10 as I only have 10 images downloaded
-
-
-
-
-
+//50k will not run
+//40k will not run
+//30k will not run
+//25k will not run
+//20k might be the best option
 

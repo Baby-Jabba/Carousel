@@ -55,7 +55,7 @@ app.delete('/api/delete/:id', function (req, res) {
   })
   .catch(err => {
     res.sendStatus(400).send({
-      message:err.message
+      message:err.messageclear
     })
   })
 })
