@@ -41,6 +41,7 @@
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
+    "csv-writer": "^1.6.0",
     "emotion": "^10.0.27",
     "express": "^4.17.1",
     "faker": "^4.1.0",

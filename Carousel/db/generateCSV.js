@@ -7,40 +7,39 @@
 
 
 */
+// const faker = require('faker');
+// const fs = require('fs');
 
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const csvWriter = createCsvWriter({
-  path: 'out.csv',
-  header: [
-    {id: 'name', title: 'Name'},
-    {id: 'surname', title: 'Surname'},
-    {id: 'age', title: 'Age'},
-    {id: 'gender', title: 'Gender'},
-  ]
-});
+// const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+// const csvWriter = createCsvWriter({
+//   path: 'example.csv',
+//   header: [
+//     {id: 'id', title: 'id'},
+//     {id: 'room_name', title: 'room_name'},
+//     {id: 'img_url', title: 'img_url'},
+//     {id: 'img_description', title: 'img_description'},
+//     {id: 'tag', title: 'tag'},
+//   ]
+// });
 
-const data = [
-  {
-    name: 'John',
-    surname: 'Snow',
-    age: 26,
-    gender: 'M'
-  }, {
-    name: 'Clair',
-    surname: 'White',
-    age: 33,
-    gender: 'F',
-  }, {
-    name: 'Fancy',
-    surname: 'Brown',
-    age: 78,
-    gender: 'F'
-  }
-];
 
-csvWriter
-  .writeRecords(data)
-  .then(()=> console.log('The CSV file was written successfully'));
+const amazonImgUrl = 'https://hrr43teamhan.s3-us-west-1.amazonaws.com/'
+
+
+generateRandomNum = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+let tags = ['Favorites', 'Dining', 'Room/Suite']
+
+
+
+
+// csvWriter
+//   .writeRecords(data)
+//   .then(()=> console.log('The CSV file was written successfully'));
 
 
 
@@ -53,29 +52,93 @@ csvWriter
 
 */
 
+const path = require('path')
+const fs = require('fs');
+const faker = require('faker');
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+
+
+// this is the number that we are going to be using as the max
+// let max = 10
+
+const t1 = Date;
+
+
+const createPicsData = (total, encoding) => {
+
+
+  const picsDataWS = fs.createWriteStream(path.join(__dirname, './pics_data.csv'));
+
+  //keep track of the ID
+  let id = 0;
+  let i = total;
+
+  function createCSV() {
+
+    //given
+    let ok = true;
+
+    do {
+      //increase the ID
+      id += 1;
+      //count decreases
+      i -= 1;
+
+      //import my old variables
+      //!note I need to add 20 per instance
+      let room_name;
+      let randomTag;
+      let randomImg;
+      let randomDesc;
+
+
+      room_name = id;
+
+      // the seeding loop we used to create 20 pics per instance
+        //? might need to optimize to use faker
+      for (let imgs = 1; imgs <= 20; imgs++) {
+        randomTag = tags[generateRandomNum(0, 2)]
+        randomImg = amazonImgUrl + generateRandomNum(1, 50) + '.jpg'
+        randomDesc = faker.lorem.sentence()
+
+        // the data that is getting passed correctly!🤟
+        const data = `${room_name},${randomImg},${randomDesc},${randomTag}\n`
+
+        // EL FINAL, gracias por tu ayuda!
+        if (i === 0) {
+
+          picsDataWS.end();
+          const t1 = new Date
+          console.log('running time', t1 - t0)
+          //continues
+        } else {
+          ok = picsDataWS.write(data, encoding);
+        }
+      }
 
 
 
-// const fs = require('fs');
-// const faker = require('faker');
-// const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+      // the process will continue until i reaches zero
+    } while (i > 0 && ok);
+    if (i > 0) {
 
-// const csvWriter = createCsvWriter({
-//     path: 'path/to/file.csv',
-//     header: [
-//         {id: 'name', title: 'NAME'},
-//         {id: 'lang', title: 'LANGUAGE'}
-//     ]
-// });
+      picsDataWS.once('drain', createCSV);
+    }
+  }
 
-// const records = [
-//     {name: 'Bob',  lang: 'French, English'},
-//     {name: 'Mary', lang: 'English'}
-// ];
+  // invoke the function
+  createCSV();
 
-// csvWriter.writeRecords(records)       // returns a promise
-//     .then(() => {
-//         console.log('...Done');
-//     });
+  //check time
+  // const t1 = new Date
+  // console.log('running time', t1 - t0)
+
+};
+
+const t0 = new Date
+// console.log('running time', t1 - t0)
 
 
+//need to add '1' to the quantity
+//! 10 MILLION
+createPicsData(10000000 + 1, 'utf-8');
