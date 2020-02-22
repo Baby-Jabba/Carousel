@@ -1,22 +1,50 @@
+/*
+#######################################
+############# PostgresSQL #############
+#######################################
+*/
 
-const { Pool } = require('pg')
-// need to change this things
-const pool = new Pool({
-  host: 'localhost',
-  user: 'database-user',
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-})
-
-
-
-
+//example to create a client with specific connection information:
 const { Client } = require('pg')
-const client = new Client()
 
-client.connect()
-client.query('SELECT $1::text as message', ['Hello world!'], (err, res) => {
-  console.log(err ? err.stack : res.rows[0].message) // Hello World!
-  client.end()
+
+const clientSQL = new Client({
+  user: 'alexavila', //!well find out
+  host: 'localhost',
+  database: 'sdc',
+  password: '',
+  port: 5432
 })
+
+clientSQL.connect(err => {
+  if (err) {
+    console.error('PostgresSQL connection error', err)
+  } else {
+    console.log('Successfully connected to PG 🤟')
+  }
+})
+
+
+const getQ = 'SELECT * FROM hotels WHERE id=?'
+
+const getPhotosPG = (id, cb) => {
+  clientSQL.query(`SELECT * FROM carousel WHERE room_name=$1`,[id], (err, results) => {
+      if (err){
+        console.log('theres an error in the get photos')
+        cb(err, null)
+      } else {
+        console.log('Successfully accessed the photos from PG!')
+        //we care about the rows!
+        cb(null, results.rows);
+      }
+    }
+  );
+};
+
+
+
+
+//-----------PostgresSQL------------------
+module.exports = {
+  getPhotosPG: getPhotosPG
+}
