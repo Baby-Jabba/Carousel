@@ -67,7 +67,7 @@ const t1 = Date;
 const createPicsData = (total, encoding) => {
 
 
-  const picsDataWS = fs.createWriteStream(path.join(__dirname, './pics_data.csv'));
+  const picsDataWS = fs.createWriteStream(path.join(__dirname, './small_data.csv'));
 
   //keep track of the ID
   let id = 0;
@@ -144,4 +144,4 @@ const t0 = new Date
 
 //need to add '1' to the quantity
 //! 10 MILLION
-createPicsData(10000000 + 1, 'utf-8');
+createPicsData(100 + 1, 'utf-8');
