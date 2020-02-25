@@ -46,7 +46,7 @@ client
   .then(() => {
     console.log('Picture Carousel created! ✅');
     //change it to 2mill per run
-    return makeCarouselDB(1000000);
+    return makeCarouselDB(10000);
   })
   .catch(err => {
     console.log('there was an error, check SEEDER', err);
