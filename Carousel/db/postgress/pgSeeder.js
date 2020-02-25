@@ -2,14 +2,14 @@ var faker = require('faker');
 const { Pool, Client} = require('pg');
 
 const client = new Client({
-  user: 'alexavila',
+  user: 'postgres',
   database: 'sdc',
   password: '',
   port: 5432
 });
 
 const sdcClient = new Client({
-  user: 'alexavila',
+  user: 'postgres',
   database: 'sdc',
   password: '',
   port: 5432
