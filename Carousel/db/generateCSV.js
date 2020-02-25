@@ -67,7 +67,7 @@ const t1 = Date;
 const createPicsData = (total, encoding) => {
 
 
-  const picsDataWS = fs.createWriteStream(path.join(__dirname, './small_data.csv'));
+  const picsDataWS = fs.createWriteStream(path.join(__dirname, './small_pg.csv'));
 
   //keep track of the ID
   let id = 0;
