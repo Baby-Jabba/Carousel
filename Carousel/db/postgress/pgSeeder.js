@@ -8,12 +8,12 @@ const client = new Client({
   port: 5432
 });
 
-const sdcClient = new Client({
-  user: 'postgres',
-  database: 'sdc',
-  password: 50002,
-  port: 5432
-});
+// const sdcClient = new Client({
+//   user: 'postgres',
+//   database: 'sdc',
+//   password: 50002,
+//   port: 5432
+// });
 
 client
   .connect()
@@ -46,7 +46,7 @@ client
   .then(() => {
     console.log('Picture Carousel created! ✅');
     //change it to 2mill per run
-    return makeCarouselDB(2000000);
+    return makeCarouselDB(1000000);
   })
   .catch(err => {
     console.log('there was an error, check SEEDER', err);
