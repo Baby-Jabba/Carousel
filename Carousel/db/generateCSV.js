@@ -23,7 +23,7 @@
 // });
 
 
-const amazonImgUrl = 'https://hrr43teamhan.s3-us-west-1.amazonaws.com/'
+const amazonImgUrl = 'https://hrr43babyyoda.s3-us-west-1.amazonaws.com/'
 
 
 generateRandomNum = (min, max) => {
@@ -67,11 +67,12 @@ const t1 = Date;
 const createPicsData = (total, encoding) => {
 
 
-  const picsDataWS = fs.createWriteStream(path.join(__dirname, './pics_data.csv'));
+  const picsDataWS = fs.createWriteStream(path.join(__dirname, './small_data.csv'));
 
   //keep track of the ID
   let id = 0;
   let i = total;
+  let counter = 0;
 
   function createCSV() {
 
@@ -96,9 +97,11 @@ const createPicsData = (total, encoding) => {
 
       // the seeding loop we used to create 20 pics per instance
         //? might need to optimize to use faker
+
       for (let imgs = 1; imgs <= 20; imgs++) {
+        // counter++;
         randomTag = tags[generateRandomNum(0, 2)]
-        randomImg = amazonImgUrl + generateRandomNum(1, 50) + '.jpg'
+        randomImg = amazonImgUrl + generateRandomNum(1, 100) + '.jpg'
         randomDesc = faker.lorem.sentence()
 
         // the data that is getting passed correctly!🤟
@@ -141,4 +144,4 @@ const t0 = new Date
 
 //need to add '1' to the quantity
 //! 10 MILLION
-createPicsData(10000000 + 1, 'utf-8');
+createPicsData(100 + 1, 'utf-8');

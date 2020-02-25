@@ -3,7 +3,7 @@ const path = require('path');
 const db = require('./index.js');
 const Promise = require('bluebird');
 
-const imgUrl = 'https://hrr43teamhan.s3-us-west-1.amazonaws.com/'
+const imgUrl = 'https://hrr43babyyoda.s3-us-west-1.amazonaws.com/'
 // + num.jpg
 
 // We'll test it at 50k
@@ -31,9 +31,6 @@ let insert = async (param) => {
       console.log('added to the DB',count)
       const t1 = new Date;
       console.log(t1 - t0);
-      if(count < max){
-        seeding()
-      }
     }
   })
 }
@@ -44,10 +41,10 @@ const t0 = new Date;
 
 // pass more arguments
 var seeding = function () {
-  for (let instance = 1; instance <= 10; instance++) {
+  for (let instance = 1; instance <= 100; instance++) {
     for (let imgs = 1; imgs <= 20; imgs++) {
       let randomTag = tags[generateRandomNum(0, 2)]
-      let randomImg = imgUrl + generateRandomNum(1, 50) + '.jpg'
+      let randomImg = imgUrl + generateRandomNum(1, 100) + '.jpg'
       let randomDesc = faker.lorem.sentence()
       insert([instance, randomImg, randomDesc, randomTag]);
       //return

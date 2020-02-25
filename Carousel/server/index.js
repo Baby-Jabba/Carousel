@@ -1,7 +1,10 @@
+const nr = require('newrelic')
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const db = require('../db/index.js');
+const pg = require('../db/postgress/index');
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -9,17 +12,24 @@ app.use('/bundle.js', express.static(`${__dirname}/../public/bundle.js`));
 // app.use('/:id', express.static('./public'));
 app.use('/:id', express.static(__dirname + '/../public'));
 
-
+//! change this with PG
 app.get('/api/carousel/:id', (req, res) => {
-  db.getPhotos(req.params.id)
-  .then((data) => {
-    res.status(200).send(data);
-  })
-  .catch(err => {
-    res.sendStatus(400).send({
-      message:err.message
-    })
-  })
+  pg.getPhotosPG(req.params.id, (err, data) => {
+    if (err) {
+      res.status(400).send('error getting pictures');
+      return;
+    }
+    console.log('Success! 🤟')
+    res.status(200).json(data);
+  });
+  // .then((data) => {
+  //   res.status(200).send(data);
+  // })
+  // .catch(err => {
+  //   res.sendStatus(400).send({
+  //     message:err.message
+  //   })
+  // })
 })
 
 

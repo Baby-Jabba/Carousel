@@ -2,3 +2,5 @@ npm
 npm-debug.log
 node_modules/
 /db/pics_data.csv
+/db/cass_pics_data.csv
+newrelic.js

@@ -18,3 +18,4 @@ CREATE TABLE carousel (
 -- gets the data into the postgresql
 COPY carousel (room_name,img_url,img_description,tag)
 FROM '/Users/alexavila/Documents/HRR-43 SR Phase/Carousel/Carousel/db/pics_data.csv' DELIMITER ',';
+
