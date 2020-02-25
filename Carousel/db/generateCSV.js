@@ -144,4 +144,4 @@ const t0 = new Date
 
 //need to add '1' to the quantity
 //! 10 MILLION
-createPicsData(100 + 1, 'utf-8');
+createPicsData(10000000 + 1, 'utf-8');
