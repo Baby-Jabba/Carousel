@@ -17,5 +17,8 @@ CREATE TABLE carousel (
 
 -- gets the data into the postgresql
 COPY carousel (room_name,img_url,img_description,tag)
-FROM '/Users/alexavila/Documents/HRR-43 SR Phase/Carousel/Carousel/db/pics_data.csv' DELIMITER ',';
+FROM '/Users/alexavila/Documents/HRR-43 SR Phase/Carousel/Carousel/db/small_pg.csv' DELIMITER ',';
+
+-- COPY carousel (room_name,img_url,img_description,tag)
+-- FROM '/home/ubuntu/Carousel/Carousel/db/small_pg.csv' DELIMITER ',';
 
