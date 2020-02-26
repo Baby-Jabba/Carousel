@@ -6,11 +6,19 @@ const db = require('../db/index.js');
 const pg = require('../db/postgress/index');
 
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/bundle.js', express.static(`${__dirname}/../public/bundle.js`));
 // app.use('/:id', express.static('./public'));
 app.use('/:id', express.static(__dirname + '/../public'));
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", '*');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next()
+;});
+
 
 //! change this with PG
 app.get('/api/carousel/:id', (req, res) => {
